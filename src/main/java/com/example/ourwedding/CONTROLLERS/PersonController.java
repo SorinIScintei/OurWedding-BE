@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,20 +18,20 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping("/confirma")
 public class PersonController {
-    private String subject = "Nunta 9 IULIE 2023, Raluca si Sorin";
+    private final String subject = "Nunta 9 IULIE 2023, Raluca si Sorin";
     private String body = "Multumim pentru confirmare! Va asteptam pe 9 IULIE 2023 sa ne fiti alaturi! Pentru mai multe detalii, va rugam sa ne contactati la 0740096512.";
 
 
     private final static Logger LOGGER =
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     @Autowired
-    EmailSenderService emailSenderService;
+    private EmailSenderService emailSenderService;
     @Autowired
-    SMSsender smSsender;
+    private SMSsender smSsender;
     @Autowired
-    PersonRepository personRepository;
+    private PersonRepository personRepository;
     @Autowired
-    InvitedPersonServiceImplementation invitedPersonServiceImplementation;
+    private InvitedPersonServiceImplementation invitedPersonServiceImplementation;
 
 
     @PostMapping("/vreauSaDevinMembru")
@@ -41,7 +39,7 @@ public class PersonController {
             @RequestBody InvitedPerson invitedPerson) {
         if (invitedPersonServiceImplementation.checkIfEmailOrNumberExists(invitedPerson.getContact())==true && invitedPersonServiceImplementation.isSMSFlag()==true) {
             try {
-                LOGGER.log(Level.INFO, "Numarul de telefon este introdus corect");
+                LOGGER.log(Level.INFO, "Numărul de telefon este introdus corect");
                 smSsender.sendSMSmessage("ralucasorin", "SorinSiRaluca29", invitedPerson.getContact(),
                         "Dragă " + invitedPerson.getContact() + ",\n" +
                                 "Vă mulţumim că aţi confirmat prezenţa la nunta noastră. Suntem onoraţi că veţi fi alături de noi în această zi specială.Vă aşteptăm cu nerăbdare.\n" +
@@ -51,20 +49,19 @@ public class PersonController {
                 System.out.println("SMS message cound not be sent");
                 e.printStackTrace();
             } finally {
-                InvitedPerson invitedPerson1 = personRepository
-                        .save(new InvitedPerson(invitedPerson.getFullName(), invitedPerson.getContact()));
+                personRepository.save(new InvitedPerson(invitedPerson.getFullName(), invitedPerson.getContact()));
                 LOGGER.log(Level.INFO, invitedPerson.getFullName() + " was inserted successfuly");
                 invitedPersonServiceImplementation.setSmsFlag(false);
                 LOGGER.log(Level.INFO,"The SMSFlag is:"+invitedPersonServiceImplementation.isSMSFlag());
 
 
-                return new ResponseEntity<>("The person was added successfully", HttpStatus.CREATED);
+                return new ResponseEntity<>("Mulțumim pentru confirmare, "+invitedPerson.getFullName()+"!"+"\n"+"În scurt timp veți primi un mesaj pe telefon sau email.", HttpStatus.CREATED);
 
 
             }
         } else if (invitedPersonServiceImplementation.checkIfEmailOrNumberExists(invitedPerson.getContact())==true && invitedPersonServiceImplementation.isEmailFlag()==true) {
             try {
-                LOGGER.log(Level.INFO, "Email-ul este scris intr-un format corect");
+                LOGGER.log(Level.INFO, "Email-ul este scris într-un format corect");
                 emailSenderService.sendEmail(invitedPerson.getContact(), subject,
                         "Dragă "+invitedPerson.getFullName()+",\n" +
                                 "\n" +
@@ -86,45 +83,37 @@ public class PersonController {
                 invitedPersonServiceImplementation.setEmailFlag(false);
                 LOGGER.log(Level.INFO,"The EmailFlag is:"+invitedPersonServiceImplementation.isEmailFlag());
 
-                return new ResponseEntity<>("The person was added successfully", HttpStatus.CREATED);
+                return new ResponseEntity<>("Mulțumim pentru confirmare, "+invitedPerson.getFullName()+"!"+ "\n"+ "În scurt timp veți primi un mesaj pe telefon sau email.", HttpStatus.CREATED);
             }
         } else {
             LOGGER.log(Level.INFO, "Datele sunt introduse intr-un format gresit");
             LOGGER.log(Level.INFO, invitedPerson.getFullName() + " was not inserted");
             invitedPersonServiceImplementation.setEmailFlag(false);
             invitedPersonServiceImplementation.setSmsFlag(false);
-            return new ResponseEntity<>("", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Datele au fost introduse greșit sau ceva nu a funcționat.Vă rugăm să reîncercați reintroducerea datelor.", HttpStatus.INTERNAL_SERVER_ERROR);
 
 
         }
 
     }
 
+//
+//    @GetMapping("/allMembers")
+//    public ResponseEntity<List> getMembers() {
+//        List<InvitedPerson> membersList;
+//        try {
+//            membersList = personRepository.findAll();
+//            for (InvitedPerson invitedPerson : membersList)
+//                System.out.println(invitedPerson.getFullName());
+//            LOGGER.log(Level.INFO, "The members were fetch successfuly");
+//
+//            return new ResponseEntity<>(membersList, HttpStatus.OK);
+//        } catch (Exception e) {
+//
+//            return new ResponseEntity<>(List.new("The members could not be fetched"), HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
-    @GetMapping("/allMembers")
-    public ResponseEntity<List> getMembers() {
-        List<InvitedPerson> membersList;
-        try {
-            membersList = personRepository.findAll();
-            for (InvitedPerson invitedPerson : membersList)
-                System.out.println(invitedPerson.getFullName());
-            LOGGER.log(Level.INFO, "The members were fetch successfuly");
-
-            return new ResponseEntity<>(membersList, HttpStatus.OK);
-        } catch (Exception e) {
-
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-        @GetMapping("/testApi")
-            public Mono<ResponseEntity> getPeople(){
-//        List<InvitedPerson> list=List.of(new InvitedPerson("Sorin","sorin@gmail.com"),new InvitedPerson("Ioan","ioan@gmail.com"));
-            List<InvitedPerson> list= Collections.emptyList();
-
-        return Mono.just(new ResponseEntity<>(list,HttpStatus.OK));
-
-            }
 
 
 }

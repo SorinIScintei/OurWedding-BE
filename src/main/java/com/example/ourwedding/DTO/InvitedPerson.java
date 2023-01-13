@@ -1,5 +1,6 @@
 package com.example.ourwedding.DTO;
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "invited_person")
@@ -9,7 +10,7 @@ public class InvitedPerson {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name="full_name")
+    @Column(name="fullName")
     private String fullName;
     @Column(name="contact")
     private String  contact;
