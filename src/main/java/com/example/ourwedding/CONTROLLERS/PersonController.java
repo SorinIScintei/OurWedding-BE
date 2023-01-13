@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://weddind-app-fe.herokuapp.com")
 @RestController
 @RequestMapping("/confirma")
 public class PersonController {
