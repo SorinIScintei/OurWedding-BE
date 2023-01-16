@@ -27,4 +27,6 @@ spring:
           auth: true
           starttls:
             enable: true
-
+java:
+  runtime:
+    version: 11
