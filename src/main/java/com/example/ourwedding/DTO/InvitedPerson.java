@@ -1,6 +1,7 @@
 package com.example.ourwedding.DTO;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "invited_person")
