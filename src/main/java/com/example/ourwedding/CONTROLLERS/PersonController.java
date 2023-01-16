@@ -62,16 +62,16 @@ public class PersonController {
         } else if (invitedPersonServiceImplementation.checkIfEmailOrNumberExists(invitedPerson.getContact())==true && invitedPersonServiceImplementation.isEmailFlag()==true) {
             try {
                 LOGGER.log(Level.INFO, "Email-ul este scris într-un format corect");
-                emailSenderService.sendEmail(invitedPerson.getContact(), subject,
-                        "Dragă "+invitedPerson.getFullName()+",\n" +
-                                "\n" +
-                                "Vreau să îţi mulţumesc din suflet pentru confirmarea prezenţei tale la nunta noastră. Suntem onoraţi că vei fi alături de noi în această zi specială.\n" +
-                                "\n" +
-                                "Suntem încântaţi că vom avea ocazia să ne împărtăşim fericirea cu cei dragi nouă.\n" +
-                                "\n" +
-                                "Ne bucurăm să ştim că vei fi alături de noi în această zi importantă şi te aşteptăm cu nerăbdare.\n" +
-                                "\n" +
-                                "Cu drag, Raluca și Sorin Scîntei.");
+//                emailSenderService.sendEmail(invitedPerson.getContact(), subject,
+//                        "Dragă "+invitedPerson.getFullName()+",\n" +
+//                                "\n" +
+//                                "Vreau să îţi mulţumesc din suflet pentru confirmarea prezenţei tale la nunta noastră. Suntem onoraţi că vei fi alături de noi în această zi specială.\n" +
+//                                "\n" +
+//                                "Suntem încântaţi că vom avea ocazia să ne împărtăşim fericirea cu cei dragi nouă.\n" +
+//                                "\n" +
+//                                "Ne bucurăm să ştim că vei fi alături de noi în această zi importantă şi te aşteptăm cu nerăbdare.\n" +
+//                                "\n" +
+//                                "Cu drag, Raluca și Sorin Scîntei.");
                 System.out.println("Email send successfully");
             } catch (Exception e) {
                 System.out.println("Email cound not be sent");
