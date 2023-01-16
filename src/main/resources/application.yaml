@@ -1,23 +1,14 @@
 #spring:
 #  datasource:
-#      type: com.zaxxer.hikari.HikariDataSource
 #      url: jdbc:postgresql://localhost:5432/wedding
 #      username: root
 #      password: SorinSiRaluca
-#      hikari:
-#        auto-commit: true
-#        maximum-pool-size: 40
-#        minimum-idle: 20
+
 spring:
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgres://vvjufgrlkyxbhb:89ae388b2e0d9c0babf9f8972da0b792ad782606d6435c3e3d603d3a04b9db91@ec2-54-155-110-181.eu-west-1.compute.amazonaws.com:5432/dc12t6jm781s8d
     username: vvjufgrlkyxbhb
     password: 89ae388b2e0d9c0babf9f8972da0b792ad782606d6435c3e3d603d3a04b9db91
-#    hikari:
-#      auto-commit: true
-#      maximum-pool-size: 40
-#      minimum-idle: 20
   jpa:
     hibernate:
       ddl-auto: update
