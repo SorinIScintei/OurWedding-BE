@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 
 @CrossOrigin(origins = "https://weddind-app-fe.herokuapp.com",allowedHeaders = "*")
 @RestController
-@RequestMapping("/confirma")
 public class PersonController {
     private final String subject = "Nunta 9 IULIE 2023, Raluca si Sorin";
     private String body = "Multumim pentru confirmare! Va asteptam pe 9 IULIE 2023 sa ne fiti alaturi! Pentru mai multe detalii, va rugam sa ne contactati la 0740096512.";
@@ -34,7 +33,7 @@ public class PersonController {
     private InvitedPersonServiceImplementation invitedPersonServiceImplementation;
 
 
-    @PostMapping("/vreauSaDevinMembru")
+    @PostMapping("confirma/vreauSaDevinMembru")
     public ResponseEntity<String> addPerson(
             @RequestBody InvitedPerson invitedPerson) {
         if (invitedPersonServiceImplementation.checkIfEmailOrNumberExists(invitedPerson.getContact())==true && invitedPersonServiceImplementation.isSMSFlag()==true) {
