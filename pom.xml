@@ -14,7 +14,7 @@
     <name>OurWedding</name>
     <description>OurWedding</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <hibernate-entitymanager>3.2.1.GA</hibernate-entitymanager>
         <spring-boot-starter-mail>2.7.1</spring-boot-starter-mail>
         <spring-cloud-starter-netflix-eureka-client>3.0.2</spring-cloud-starter-netflix-eureka-client>
@@ -34,7 +34,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
@@ -51,7 +50,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.3.3</version>
+            <version>42.3.8</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -63,11 +62,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.sun.mail/jakarta.mail -->
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>jakarta.mail</artifactId>
-            <version>1.6.5</version>
+            <version>2.0.1</version>
         </dependency>
 
         <dependency>
